@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Marketing Detective | Strategic Dossier</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:ital,wght@0,600;0,700;1,600&family=Courier+Prime&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Source+Serif+4:wght@100..900&display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed-dim": "#96ccff",
+                    "on-secondary": "#2a313b",
+                    "on-tertiary-fixed": "#001d32",
+                    "on-surface": "#f2dfd3",
+                    "on-secondary-container": "#afb5c2",
+                    "surface-container-high": "#322820",
+                    "tertiary-container": "#0297e8",
+                    "on-primary-container": "#432100",
+                    "on-error-container": "#ffdad6",
+                    "secondary": "#c0c7d3",
+                    "secondary-fixed-dim": "#c0c7d3",
+                    "secondary-container": "#404752",
+                    "surface-dim": "#1a120b",
+                    "surface": "#1a120b",
+                    "primary-fixed": "#ffdcc3",
+                    "inverse-surface": "#f2dfd3",
+                    "inverse-on-surface": "#392e26",
+                    "secondary-fixed": "#dce3f0",
+                    "on-tertiary-container": "#002c48",
+                    "on-primary": "#4d2600",
+                    "error-container": "#93000a",
+                    "surface-bright": "#42372f",
+                    "on-surface-variant": "#dbc2b0",
+                    "on-error": "#690005",
+                    "primary-fixed-dim": "#ffb77d",
+                    "surface-container-low": "#231a13",
+                    "outline": "#a38c7c",
+                    "on-tertiary": "#003353",
+                    "inverse-primary": "#904d00",
+                    "surface-container": "#271e16",
+                    "on-primary-fixed-variant": "#6e3900",
+                    "tertiary-fixed": "#cee5ff",
+                    "primary-container": "#d97707",
+                    "on-secondary-fixed": "#151c25",
+                    "on-primary-fixed": "#2f1500",
+                    "surface-variant": "#3e332b",
+                    "surface-tint": "#ffb77d",
+                    "tertiary": "#96ccff",
+                    "on-secondary-fixed-variant": "#404752",
+                    "surface-container-lowest": "#150c06",
+                    "on-tertiary-fixed-variant": "#004a75",
+                    "outline-variant": "#554336",
+                    "error": "#ffb4ab",
+                    "on-background": "#f2dfd3",
+                    "primary": "#ffb77d",
+                    "surface-container-highest": "#3e332b",
+                    "background": "#1a120b"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "margin-desktop": "64px",
+                    "unit": "4px",
+                    "container-max": "1200px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-lg": ["\"Source Serif 4\""],
+                    "label-caps": ["Inter"],
+                    "display-lg": ["\"Source Serif 4\""],
+                    "headline-lg-mobile": ["\"Source Serif 4\""],
+                    "data-mono": ["Courier Prime"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        :root {
+            --bg-texture: radial-gradient(circle at 2px 2px, rgba(255,183,125,0.05) 1px, transparent 0);
+            --bg-size: 24px 24px;
+        }
+        body {
+            background-color: #111115;
+            background-image: var(--bg-texture);
+            background-size: var(--bg-size);
+            color: #f2dfd3;
+            overflow-x: hidden;
+        }
+        .noir-effect { filter: grayscale(100%) contrast(120%); }
+        .corkboard { background: #271e16; border: 8px solid #3e332b; box-shadow: inset 0 0 40px rgba(0,0,0,0.8); }
+        
+        .ink-stamp {
+            transform: rotate(-12deg);
+            border: 4px solid currentColor;
+            padding: 8px 16px;
+            font-weight: 800;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .ink-stamp.active { opacity: 0.8; transform: rotate(-12deg) scale(1.2); }
+
+        .polaroid {
+            background: #fdfdfd;
+            padding: 12px 12px 40px 12px;
+            box-shadow: 4px 10px 20px rgba(0,0,0,0.6);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            color: #1a120b;
+        }
+        .polaroid:hover { transform: scale(1.05) rotate(2deg) !important; z-index: 50; }
+        
+        .terminal-cursor { animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+        
+        .flicker { animation: flicker 3s infinite; }
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+            20%, 22%, 24%, 55% { opacity: 0.4; }
+        }
+
+        .case-closed-overlay {
+            background: rgba(0,0,0,0.9);
+            display: none;
+            z-index: 100;
+        }
+
+        .connecting-line {
+            pointer-events: none;
+            stroke-dasharray: 5;
+            animation: dash 10s linear infinite;
+        }
+        @keyframes dash { to { stroke-dashoffset: -100; } }
+
+        .neon-glow { text-shadow: 0 0 10px rgba(217, 119, 6, 0.6); }
+        
+        /* Theme Overrides */
+        .theme-orange { --primary: #d97707; }
+        .theme-neon { --primary: #00ffcc; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md selection:bg-primary selection:text-on-primary">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full bg-surface z-50 flex items-center justify-between px-margin-mobile md:px-margin-desktop py-4 border-b border-outline-variant shadow-sm h-16">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary flicker">fingerprint</span>
+<h1 class="font-headline-lg-mobile text-primary tracking-tighter uppercase font-bold">Marketing Detective</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-variant transition-colors rounded-full" onclick="toggleThemeMenu()">
+<span class="material-symbols-outlined text-on-surface-variant">palette</span>
+</button>
+<div class="hidden absolute top-16 right-4 bg-surface-container border border-outline-variant p-2 rounded-lg shadow-xl z-50" id="themeMenu">
+<button class="block w-full text-left px-4 py-2 hover:bg-surface-variant font-label-caps" onclick="setTheme('classic')">CLASSIC NOIR</button>
+<button class="block w-full text-left px-4 py-2 hover:bg-surface-variant font-label-caps" onclick="setTheme('orange')">CLAUDE ORANGE</button>
+<button class="block w-full text-left px-4 py-2 hover:bg-surface-variant font-label-caps" onclick="setTheme('neon')">NEON SLEUTH</button>
+</div>
+</div>
+</header>
+<main class="pt-20 pb-24 min-h-screen px-margin-mobile md:px-margin-desktop">
+<!-- Dashboard / Briefing Section -->
+<section class="max-w-container-max mx-auto space-y-8 py-8 animate-fade-in" id="section-briefing">
+<div class="flex flex-col md:flex-row justify-between items-start border-b-2 border-outline-variant pb-6 mb-8">
+<div>
+<h2 class="font-display-lg text-primary uppercase italic">Active Files</h2>
+<p class="font-data-mono text-on-surface-variant opacity-60">INCIDENT LOGS: 10 UNRESOLVED</p>
+</div>
+<div class="mt-4 md:mt-0 px-4 py-2 bg-surface-variant border-l-4 border-primary">
+<span class="font-label-caps text-primary">STATUS: INVESTIGATING</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter" id="case-grid">
+<!-- Cases injected by JS -->
+</div>
+</section>
+<!-- Analysis Section (Corkboard) -->
+<section class="hidden max-w-container-max mx-auto h-[707px] relative mt-4" id="section-analysis">
+<div class="corkboard w-full h-full rounded-xl relative overflow-hidden p-8">
+<div class="absolute top-4 right-4 bg-black/50 p-2 rounded border border-primary/30 z-10">
+<p class="font-label-caps text-primary">CORKBOARD: NODE LINKER</p>
+</div>
+<!-- SVG Layer for connections -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none z-0" id="svg-canvas"></svg>
+<div class="relative z-10 w-full h-full" id="corkboard-content">
+<!-- Polaroids injected by JS -->
+</div>
+</div>
+<!-- Terminal/Evidence Scanner Sidebar -->
+<div class="fixed bottom-24 right-margin-mobile md:right-margin-desktop w-72 md:w-96 bg-black border-2 border-primary p-4 shadow-[0_0_20px_rgba(217,119,6,0.2)] transform translate-y-full transition-transform duration-500" id="evidence-scanner">
+<div class="flex justify-between items-center mb-2 border-b border-primary/30 pb-1">
+<span class="font-label-caps text-primary">SCANNED EVIDENCE</span>
+<button class="text-primary" onclick="closeScanner()"><span class="material-symbols-outlined text-sm">close</span></button>
+</div>
+<div class="font-data-mono text-primary text-sm leading-relaxed h-40 overflow-y-auto custom-scrollbar" id="terminal-output">
+<span class="terminal-cursor">_</span>
+</div>
+<button class="mt-4 w-full bg-primary text-on-primary py-2 font-label-caps hover:brightness-110 transition-all opacity-50 cursor-not-allowed" id="solve-button" onclick="attemptSolve()">CONNECT NODES TO SOLVE</button>
+</div>
+</section>
+<!-- Ledger Section -->
+<section class="hidden max-w-container-max mx-auto py-8" id="section-ledger">
+<div class="bg-surface-container p-8 rounded-lg border border-outline-variant shadow-2xl">
+<h2 class="font-headline-lg text-primary mb-6">Detective Performance Ledger</h2>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-data-mono">
+<thead class="border-b border-outline-variant">
+<tr class="text-on-surface-variant font-label-caps">
+<th class="pb-4">CASE FILE</th>
+<th class="pb-4">DIFFICULTY</th>
+<th class="pb-4">STATUS</th>
+<th class="pb-4">RATING</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30" id="ledger-body">
+<!-- Injected by JS -->
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-surface-container border-t border-outline-variant shadow-[0px_-4px_12px_rgba(0,0,0,0.5)]">
+<button class="flex flex-col items-center justify-center p-2 text-on-surface-variant hover:text-primary transition-all scale-95 active:scale-90" id="nav-briefing" onclick="showSection('briefing')">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+<span class="font-label-caps mt-1">BRIEFING</span>
+</button>
+<button class="flex flex-col items-center justify-center p-2 text-on-surface-variant hover:text-primary transition-all scale-95 active:scale-90" id="nav-analysis" onclick="showSection('analysis')">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-label-caps mt-1">ANALYSIS</span>
+</button>
+<button class="flex flex-col items-center justify-center p-2 text-on-surface-variant hover:text-primary transition-all scale-95 active:scale-90" id="nav-ledger" onclick="showSection('ledger')">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-label-caps mt-1">LEDGER</span>
+</button>
+</nav>
+<!-- Case Closed Animation Overlay -->
+<div class="fixed inset-0 case-closed-overlay flex items-center justify-center" id="solve-overlay">
+<div class="text-center">
+<div class="ink-stamp border-error text-error text-6xl md:text-9xl mb-8 -rotate-12 inline-block" id="stamp-target">CASE CLOSED</div>
+<div class="max-w-2xl bg-surface p-8 rounded border border-outline shadow-2xl opacity-0 translate-y-10 transition-all duration-700" id="post-mortem-content">
+<!-- Content injected -->
+</div>
+<button class="mt-8 bg-primary text-on-primary px-8 py-3 font-label-caps hover:scale-105 transition-transform" onclick="closeOverlay()">RETURN TO HQ</button>
+</div>
+</div>
+<script>
+        const caseDatabase = [
+            {
+                id: 1,
+                title: "The Ghost Mattress",
+                symptom: "Viral TikTok campaign generates 1M+ views but 0 sales.",
+                dataNode: "Checkout Analytics: 98% drop-off at Shipping Step.",
+                insight: "The shipping API was broken for rural zip codes, which made up 60% of the viral audience.",
+                difficulty: "HARD",
+                breakdown: "Marketing and Operations lived in silos. High visibility met a broken gatekeeper.",
+                remediation: "Implement full-funnel sanity checks before scaling spend.",
+                framework: "The Friction Principle: Every pixel of friction costs 10% conversion."
+            },
+            {
+                id: 2,
+                title: "Hidden Freight Fiasco",
+                symptom: "AOV is high, but Return Customer Rate is near zero.",
+                dataNode: "Post-Purchase Survey: 'Deceptive Pricing' keywords.",
+                insight: "Customers were hit with a 'handling fee' only on the final invoice email, not the checkout screen.",
+                difficulty: "MEDIUM",
+                breakdown: "Short-term margin gain sacrificed long-term brand equity.",
+                remediation: "Radical pricing transparency; bundle fees into core price.",
+                framework: "Trust Equity Model: Trust is built in drops and lost in buckets."
+            },
+            {
+                id: 3,
+                title: "Billboard Blindness",
+                symptom: "Luxury car brand spends $2M on billboards in suburbs, web traffic remains flat.",
+                dataNode: "Geofence Data: Average speed at billboard locations is 75mph.",
+                insight: "The creative was too detailed. At highway speeds, drivers only saw a blur of grey.",
+                difficulty: "EASY",
+                breakdown: "Context blindness. Designing for a screen, not a windshield.",
+                remediation: "High-contrast, 3-word maximum copy for outdoor media.",
+                framework: "Contextual Speed Theory: Processing time must match transit velocity."
+            },
+            {
+                id: 4,
+                title: "The Influencer Echo",
+                symptom: "20 micro-influencers hired, total reach of 500k, zero attribution.",
+                dataNode: "Audience Overlap: Influencers shared 85% of the same followers.",
+                insight: "You paid 20 people to tell the same guy the same thing 20 times.",
+                difficulty: "HARD",
+                breakdown: "Lack of audience diversification led to saturated fatigue.",
+                remediation: "Cross-reference follower lists before booking creators.",
+                framework: "The Saturation Ceiling: Diminishing returns after the 3rd touchpoint."
+            },
+            {
+                id: 5,
+                title: "Dark Mode Disaster",
+                symptom: "Email click-through rate dropped 40% after a redesign.",
+                dataNode: "Device Logs: 70% of users on iOS Dark Mode.",
+                insight: "The CTA button was a transparent PNG that disappeared on black backgrounds.",
+                difficulty: "MEDIUM",
+                breakdown: "Design focused on the 'Ideal State' instead of the 'Real State'.",
+                remediation: "Rigorous cross-client email testing protocol.",
+                framework: "Edge Case Dominance: Your design is only as good as its worst render."
+            },
+            {
+                id: 6,
+                title: "The Discount Death Spiral",
+                symptom: "Revenue is up 300%, but Profit Margin is down 50%.",
+                dataNode: "Coupon Usage: 95% of orders use 'WELCOME20'.",
+                insight: "The pop-up was too aggressive; users wouldn't buy without the code they knew was coming.",
+                difficulty: "MEDIUM",
+                breakdown: "Training the customer to wait for a deal devalued the product.",
+                remediation: "Move from universal discounts to value-add bonuses.",
+                framework: "Price Anchor Decay: A discount is a permanent mark-down in the buyer's mind."
+            },
+            {
+                id: 7,
+                title: "Local Hero, Global Zero",
+                symptom: "SaaS tool loved in the US fails completely in Japan.",
+                dataNode: "Session Replay: Users hovering over 'Submit' for 30s.",
+                insight: "Direct translation made the 'Submit' button say 'Surrender' in Japanese.",
+                difficulty: "EASY",
+                breakdown: "Localization vs Translation. Cultural nuance ignored.",
+                remediation: "Hire native speakers for UI audit, not just Google Translate.",
+                framework: "Cultural Semantics: Words carry weight, not just definitions."
+            },
+            {
+                id: 8,
+                title: "The Lead Magnet Trap",
+                symptom: "E-book gets 10k downloads, sales team reports 'zero quality'.",
+                dataNode: "Form Fields: No 'Company Size' or 'Role' questions.",
+                insight: "The content was too generic, attracting students rather than CTOs.",
+                difficulty: "MEDIUM",
+                breakdown: "Optimizing for volume rather than intent.",
+                remediation: "Gated content should solve a specific professional pain point.",
+                framework: "The Intent Filter: High friction for low-quality users is a feature."
+            },
+            {
+                id: 9,
+                title: "Cookie Consent Chaos",
+                symptom: "Ads report 10 conversions, Shopify reports 100.",
+                dataNode: "Pixel Health: Consent banner blocking scripts globally.",
+                insight: "Legal team forced a 'Reject All' button that broke tracking before the page loaded.",
+                difficulty: "HARD",
+                breakdown: "Compliance over-engineered to the point of data blindness.",
+                remediation: "Server-side tracking implementation to bypass front-end blocks.",
+                framework: "The Privacy Paradox: Measuring in the dark is worse than not measuring."
+            },
+            {
+                id: 10,
+                title: "The Search for Nothing",
+                symptom: "Paid Search spend at $50k/mo with zero ROAS.",
+                dataNode: "Search Terms: 40% are for 'Customer Support' numbers.",
+                insight: "The brand was paying $12/click to let existing customers find their support line.",
+                difficulty: "EASY",
+                breakdown: "Negative keyword list was neglected for 18 months.",
+                remediation: "Aggressive negative keyword mining and support SEO optimization.",
+                framework: "Wasted Intent: Paying for a conversation you already won."
+            }
+        ];
+
+        let activeCase = null;
+        let selectedNodes = [];
+        let connections = [];
+
+        function init() {
+            renderCases();
+            renderLedger();
+            setTheme('classic');
+            showSection('briefing');
+        }
+
+        function setTheme(theme) {
+            const body = document.body;
+            body.classList.remove('noir-effect', 'theme-orange', 'theme-neon');
+            document.getElementById('themeMenu').classList.add('hidden');
+            
+            if (theme === 'classic') body.classList.add('noir-effect');
+            if (theme === 'orange') body.classList.add('theme-orange');
+            if (theme === 'neon') body.classList.add('theme-neon');
+        }
+
+        function toggleThemeMenu() {
+            document.getElementById('themeMenu').classList.toggle('hidden');
+        }
+
+        function showSection(id) {
+            ['briefing', 'analysis', 'ledger'].forEach(s => {
+                document.getElementById(`section-${s}`).classList.add('hidden');
+                document.getElementById(`nav-${s}`).className = "flex flex-col items-center justify-center text-on-surface-variant p-2";
+            });
+
+            document.getElementById(`section-${id}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`nav-${id}`);
+            activeBtn.className = "flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-lg p-2 shadow-[0px_0px_12px_rgba(217,119,6,0.4)]";
+            
+            if (id === 'analysis' && activeCase) {
+                renderAnalysis(activeCase);
+            }
+        }
+
+        function renderCases() {
+            const grid = document.getElementById('case-grid');
+            grid.innerHTML = caseDatabase.map(c => `
+                <div onclick="selectCase(${c.id})" class="bg-surface-container-high p-6 border border-outline-variant hover:border-primary transition-all cursor-pointer group relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 opacity-5 group-hover:opacity-20 transition-opacity">
+                        <span class="material-symbols-outlined text-8xl">search</span>
+                    </div>
+                    <p class="font-data-mono text-primary text-xs mb-2">FILE NO: ${c.id.toString().padStart(3, '0')}</p>
+                    <h3 class="font-headline-lg-mobile text-on-surface mb-4 uppercase tracking-tight">${c.title}</h3>
+                    <p class="text-sm text-on-surface-variant mb-6 line-clamp-2 italic">"${c.symptom}"</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] font-label-caps border border-outline-variant px-2 py-1">${c.difficulty}</span>
+                        <span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-all translate-x-4 group-hover:translate-x-0">arrow_forward</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectCase(id) {
+            activeCase = caseDatabase.find(c => c.id === id);
+            showSection('analysis');
+        }
+
+        function renderAnalysis(caseObj) {
+            const board = document.getElementById('corkboard-content');
+            board.innerHTML = '';
+            selectedNodes = [];
+            document.getElementById('svg-canvas').innerHTML = '';
+            document.getElementById('terminal-output').innerHTML = '<span class="terminal-cursor">_</span>';
+            document.getElementById('solve-button').classList.add('opacity-50', 'cursor-not-allowed');
+
+            const nodes = [
+                { type: 'symptom', content: caseObj.symptom, x: 10, y: 20 },
+                { type: 'node', content: caseObj.dataNode, x: 60, y: 50 }
+            ];
+
+            nodes.forEach((n, i) => {
+                const div = document.createElement('div');
+                div.className = 'polaroid absolute w-48 md:w-64 select-none';
+                div.style.left = `${n.x}%`;
+                div.style.top = `${n.y}%`;
+                div.style.transform = `rotate(${Math.random() * 10 - 5}deg)`;
+                div.id = `node-${i}`;
+                div.innerHTML = `
+                    <div class="w-full h-32 bg-stone-200 mb-2 border border-stone-300 flex items-center justify-center overflow-hidden">
+                         <span class="material-symbols-outlined text-stone-400 text-5xl">${n.type === 'symptom' ? 'report_problem' : 'query_stats'}</span>
+                    </div>
+                    <p class="text-[10px] font-bold uppercase mb-1 border-b border-stone-200 pb-1">${n.type}</p>
+                    <p class="text-xs font-body-md leading-snug">${n.content}</p>
+                `;
+                div.onclick = () => selectNode(i, n);
+                board.appendChild(div);
+            });
+        }
+
+        function selectNode(index, data) {
+            const div = document.getElementById(`node-${index}`);
+            
+            if (selectedNodes.includes(index)) return;
+            
+            selectedNodes.push(index);
+            div.classList.add('ring-4', 'ring-primary');
+            
+            // Scanner Animation
+            const scanner = document.getElementById('evidence-scanner');
+            scanner.classList.remove('translate-y-full');
+            
+            typeTerminal(`SCANNING ${data.type.toUpperCase()}... DATA FRAGMENT RECOVERED: ${data.content.substring(0, 30)}...`);
+
+            if (selectedNodes.length === 2) {
+                drawLink(0, 1);
+                document.getElementById('solve-button').classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        function drawLink(idA, idB) {
+            const a = document.getElementById(`node-${idA}`).getBoundingClientRect();
+            const b = document.getElementById(`node-${idB}`).getBoundingClientRect();
+            const canvas = document.getElementById('svg-canvas');
+            const boardRect = document.querySelector('.corkboard').getBoundingClientRect();
+
+            const x1 = (a.left + a.width/2) - boardRect.left;
+            const y1 = (a.top + a.height/2) - boardRect.top;
+            const x2 = (b.left + b.width/2) - boardRect.left;
+            const y2 = (b.top + b.height/2) - boardRect.top;
+
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.setAttribute("x1", x1);
+            line.setAttribute("y1", y1);
+            line.setAttribute("x2", x2);
+            line.setAttribute("y2", y2);
+            line.setAttribute("stroke", "#d97707");
+            line.setAttribute("stroke-width", "3");
+            line.setAttribute("class", "connecting-line");
+            canvas.appendChild(line);
+        }
+
+        function typeTerminal(text) {
+            const out = document.getElementById('terminal-output');
+            const p = document.createElement('p');
+            p.className = "mb-2 text-primary";
+            out.prepend(p);
+            
+            let i = 0;
+            const interval = setInterval(() => {
+                p.textContent += text[i];
+                i++;
+                if (i >= text.length) clearInterval(interval);
+            }, 20);
+        }
+
+        function closeScanner() {
+            document.getElementById('evidence-scanner').classList.add('translate-y-full');
+        }
+
+        function attemptSolve() {
+            if (selectedNodes.length < 2) return;
+            
+            const overlay = document.getElementById('solve-overlay');
+            const stamp = document.getElementById('stamp-target');
+            const postMortem = document.getElementById('post-mortem-content');
+            
+            overlay.style.display = 'flex';
+            
+            setTimeout(() => {
+                stamp.classList.add('active');
+                postMortem.classList.remove('opacity-0', 'translate-y-10');
+                postMortem.innerHTML = `
+                    <h3 class="font-display-lg text-primary mb-4 italic">Post-Mortem: ${activeCase.title}</h3>
+                    <div class="space-y-6 text-left">
+                        <div>
+                            <p class="font-label-caps text-on-surface-variant">THE BREAKDOWN</p>
+                            <p class="font-body-md">${activeCase.breakdown}</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-surface-variant/50 border border-outline-variant">
+                                <p class="font-label-caps text-primary">TACTICAL REMEDIATION</p>
+                                <p class="text-sm italic">${activeCase.remediation}</p>
+                            </div>
+                            <div class="p-4 bg-primary/10 border border-primary/30">
+                                <p class="font-label-caps text-primary">CORE FRAMEWORK</p>
+                                <p class="text-sm font-bold">${activeCase.framework}</p>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-outline-variant">
+                            <p class="font-data-mono text-xs text-on-surface-variant">INSIGHT: ${activeCase.insight}</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Mark case as solved in ledger
+                markCaseSolved(activeCase.id);
+            }, 300);
+        }
+
+        function markCaseSolved(id) {
+            const solved = JSON.parse(localStorage.getItem('solvedCases') || '[]');
+            if (!solved.includes(id)) {
+                solved.push(id);
+                localStorage.setItem('solvedCases', JSON.stringify(solved));
+                renderLedger();
+            }
+        }
+
+        function renderLedger() {
+            const solved = JSON.parse(localStorage.getItem('solvedCases') || '[]');
+            const tbody = document.getElementById('ledger-body');
+            
+            tbody.innerHTML = caseDatabase.map(c => `
+                <tr class="hover:bg-surface-variant/20 transition-colors">
+                    <td class="py-4 text-on-surface">${c.title}</td>
+                    <td class="py-4">
+                        <span class="text-[10px] border px-1 ${c.difficulty === 'HARD' ? 'border-error text-error' : 'border-outline-variant text-on-surface-variant'}">${c.difficulty}</span>
+                    </td>
+                    <td class="py-4">
+                        ${solved.includes(c.id) ? 
+                            '<span class="text-primary flex items-center gap-1"><span class="material-symbols-outlined text-sm">verified</span> RESOLVED</span>' : 
+                            '<span class="text-on-surface-variant opacity-50 italic">OPEN</span>'}
+                    </td>
+                    <td class="py-4 text-primary">${solved.includes(c.id) ? '★★★★★' : '---'}</td>
+                </tr>
+            `).join('');
+        }
+
+        function closeOverlay() {
+            document.getElementById('solve-overlay').style.display = 'none';
+            document.getElementById('stamp-target').classList.remove('active');
+            showSection('briefing');
+        }
+
+        // Initialize on Load
+        window.onload = init;
+    </script>
+</body></html>
